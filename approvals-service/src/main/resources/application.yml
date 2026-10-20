@@ -1,0 +1,17 @@
+spring:
+  application.name: approvals-service
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:approvals}
+    username: ${DATABASE_USERNAME:approvals}
+    password: ${DATABASE_PASSWORD:approvals}
+  jpa:
+    hibernate.ddl-auto: update
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: approvals
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+
+logging.level.net.threeisolutions.approvals: DEBUG
