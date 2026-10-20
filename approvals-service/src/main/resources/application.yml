@@ -13,5 +13,14 @@ spring:
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}
+approvals:
+  timers:
+    poll-interval: PT5S
+    batch-size: 100
+    lock-duration: PT2M
+  channels:
+    default-channels: [IN_APP, EMAIL]
+    token-ttl: PT72H
+    public-base-url: ${APPROVALS_PUBLIC_URL:http://localhost:8080}
 
 logging.level.net.threeisolutions.approvals: DEBUG
