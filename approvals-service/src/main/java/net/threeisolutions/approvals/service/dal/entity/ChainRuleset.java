@@ -9,12 +9,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.threeisolutions.approvals.api.dto.policy.RulesetDto;
 import net.threeisolutions.approvals.service.dal.entity.core.BaseEntity;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.envers.Audited;
 import org.hibernate.type.SqlTypes;
-
-import java.util.Map;
 
 @Entity
 @Table(name = "chain_ruleset",
@@ -39,7 +38,7 @@ public class ChainRuleset extends BaseEntity {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "body", nullable = false)
-    private Map<String, Object> body;
+    private RulesetDto body;
 
     @Column(name = "published", nullable = false)
     @Builder.Default

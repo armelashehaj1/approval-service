@@ -45,6 +45,7 @@ public class ApprovalDocument extends BaseEntity {
     @Column(name = "sha256", nullable = false)
     private byte[] sha256;
 
-    @Column(name = "storage_key", nullable = false)
-    private String storageKey;
+    /// Id of the file in file-management.
+    @Column(name = "file_id", nullable = false)
+    private UUID fileId;
 }

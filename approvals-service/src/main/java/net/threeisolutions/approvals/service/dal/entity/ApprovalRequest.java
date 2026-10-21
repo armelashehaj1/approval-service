@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.threeisolutions.approvals.api.dto.policy.PolicyDto;
 import net.threeisolutions.approvals.api.enums.RequestStatus;
 import net.threeisolutions.approvals.api.enums.TerminalSource;
 import net.threeisolutions.approvals.service.dal.entity.core.BaseEntity;
@@ -80,12 +81,10 @@ public class ApprovalRequest extends BaseEntity {
     @Column(name = "ruleset_version")
     private Integer rulesetVersion;
 
-    /**
-     * Typed as a map until the policy DTOs land in approvals-api (phase 2).
-     */
+    /// Verbatim snapshot of the chain the request was created with; never rewritten.
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "policy", nullable = false, updatable = false)
-    private Map<String, Object> policy;
+    private PolicyDto policy;
 
     @Column(name = "policy_hash", nullable = false, updatable = false)
     private byte[] policyHash;

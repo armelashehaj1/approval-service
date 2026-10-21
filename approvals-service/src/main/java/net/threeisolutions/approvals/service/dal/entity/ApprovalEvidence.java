@@ -58,8 +58,9 @@ public class ApprovalEvidence extends BaseEntity {
     @Column(name = "sha256", nullable = false)
     private byte[] sha256;
 
-    @Column(name = "storage_key")
-    private String storageKey;
+    /// Id of the file in file-management, null once the file is purged, so the row still shows one existed.
+    @Column(name = "file_id")
+    private UUID fileId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "scan_status", nullable = false)
