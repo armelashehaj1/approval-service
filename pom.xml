@@ -19,7 +19,6 @@
 	<modules>
 		<module>approvals-api</module>
 		<module>approvals-service</module>
-		<module>approvals-client-spring-boot-starter</module>
 	</modules>
 
 	<properties>
