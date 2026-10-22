@@ -1,4 +1,4 @@
-package net.threeisolutions.approvals.service.config.security;
+package net.threeisolutions.approvals.service.security;
 
 import lombok.NoArgsConstructor;
 

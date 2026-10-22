@@ -17,10 +17,6 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.envers.Audited;
 import org.hibernate.type.SqlTypes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Entity
 @Table(name = "approval_client",
         uniqueConstraints = @UniqueConstraint(name = "uq_client_code", columnNames = "code"))
@@ -53,8 +49,7 @@ public class ApprovalClient extends BaseEntity {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "config", nullable = false)
-    @Builder.Default
-    private Map<String, Object> config = new HashMap<>();
+    private ClientConfigDto config;
 
     @Column(name = "enabled", nullable = false)
     @Builder.Default

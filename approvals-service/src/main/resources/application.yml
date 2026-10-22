@@ -13,24 +13,22 @@ spring:
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}
+  security.oauth2.resourceserver.jwt:
+    # Blank issuer: no JwtDecoder is created and only API keys authenticate.
+    issuer-uri: ${approvals.security.oauth.issuer-uri}
+    audiences: ${approvals.security.oauth.audiences}
+
 approvals:
-  timers:
-    poll-interval: PT5S
-    batch-size: 100
-    lock-duration: PT2M
-  channels:
-    default-channels: [IN_APP, EMAIL]
-    token-ttl: PT72H
-    public-base-url: ${APPROVALS_PUBLIC_URL:http://localhost:8080}
-  storage:
-    documents-folder: approvals-documents
-    quarantine-folder: approvals-quarantine
-    evidence-folder: approvals-evidence
-  evidence:
-    max-size-bytes: 20971520
-    allowed-types: [application/pdf]
-    lotl-url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-    tsl-cache-dir: ${TSL_CACHE_DIR:/var/cache/approvals/tsl}
-    stuck-after: PT15M
+  security:
+    # One IdP per deployment, chosen in the env file
+    oauth:
+      issuer-uri: ${OAUTH_ISSUER_URI:}
+      audiences: ${OAUTH_AUDIENCES:}
+      permission-claims: ${OAUTH_PERMISSION_CLAIMS:scope}
+      principal-claim: ${OAUTH_PRINCIPAL_CLAIM:sub}
+      email-claim: ${OAUTH_EMAIL_CLAIM:email}
+      name-claim: ${OAUTH_NAME_CLAIM:name}
+      mfa-claim: ${OAUTH_MFA_CLAIM:}
+      mfa-value: ${OAUTH_MFA_VALUE:mfa}
 
 logging.level.net.threeisolutions.approvals: DEBUG

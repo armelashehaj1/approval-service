@@ -1,13 +1,10 @@
-package net.threeisolutions.approvals.service.config.security;
+package net.threeisolutions.approvals.service.security;
 
 import lombok.RequiredArgsConstructor;
-import net.threeisolutions.approvals.api.enums.ClientAuthMode;
 import net.threeisolutions.approvals.service.dal.entity.ApprovalClient;
 import net.threeisolutions.approvals.service.dal.repository.ApprovalClientRepository;
 import net.threeisolutions.approvals.service.util.exception.ClientNotAuthorizedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,29 +15,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientContextResolver {
 
-    private final ApprovalClientRepository clients;
-
+    /// API keys resolve their client in ApiKeyAuthenticationFilter. This handles OAuth tokens only
     @Transactional(readOnly = true)
-    public ClientContext resolve(Authentication authentication) {
-        ApprovalClient client = switch (authentication) {
-            case ApiKeyAuthenticationToken apiKey -> clients.findById(apiKey.getPrincipal())
-                    .filter(c -> c.getAuthMode() == ClientAuthMode.API_KEY)
-                    .orElseThrow(() -> new ClientNotAuthorizedException("Client is not set up for API keys"));
-            case JwtAuthenticationToken jwt -> fromJwt(jwt.getToken())
-                    .orElseThrow(() -> new ClientNotAuthorizedException("Token does not belong to a known client"));
-            default -> throw new ClientNotAuthorizedException("Unsupported authentication");
-        };
+    public ClientContext resolve(Jwt jwt) {
+        ApprovalClient client = fromJwt(jwt)
+                .orElseThrow(() -> new ClientNotAuthorizedException("Token does not belong to a known client"));
         if (!client.isEnabled()) {
             throw new ClientNotAuthorizedException("Client is disabled");
         }
-        return ClientContext.builder()
-                .clientId(client.getId())
-                .code(client.getCode())
-                .tenantId(client.getTenantId())
-                .authenticatedBy(client.getAuthMode())
-                .config(client.getConfig())
-                .build();
+        return ClientContext.of(client);
     }
+
+    private final ApprovalClientRepository clients;
 
     private Optional<ApprovalClient> fromJwt(Jwt jwt) {
         String clientId = Optional.ofNullable(jwt.getClaimAsString("azp")).orElse(jwt.getClaimAsString("client_id"));
