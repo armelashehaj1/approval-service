@@ -8,10 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="approvals-api" />
-        <module name="approvals-client-spring-boot-starter" />
         <module name="approvals-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="approvals-client-spring-boot-starter" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
