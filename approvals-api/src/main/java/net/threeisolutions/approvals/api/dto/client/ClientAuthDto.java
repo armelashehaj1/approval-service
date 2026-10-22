@@ -1,7 +1,5 @@
 package net.threeisolutions.approvals.api.dto.client;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -25,10 +23,4 @@ public class ClientAuthDto {
 
     @Size(max = 200)
     private String clientId;
-
-    @JsonIgnore
-    @AssertTrue(message = "OAUTH_CC needs issuer")
-    public boolean isComplete() {
-        return mode != ClientAuthMode.OAUTH_CC || issuer != null;
-    }
 }
