@@ -11,11 +11,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.threeisolutions.approvals.api.dto.client.ClientConfigDto;
 import net.threeisolutions.approvals.api.enums.ClientAuthMode;
 import net.threeisolutions.approvals.service.dal.entity.core.BaseEntity;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.envers.Audited;
 import org.hibernate.type.SqlTypes;
+
+import java.util.List;
 
 @Entity
 @Table(name = "approval_client",
