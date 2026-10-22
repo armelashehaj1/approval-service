@@ -1,9 +1,9 @@
 spring:
   application.name: approvals-service
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:approvals}
-    username: ${DATABASE_USERNAME:approvals}
-    password: ${DATABASE_PASSWORD:approvals}
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:approval}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:password}
   jpa:
     hibernate.ddl-auto: update
   kafka:
@@ -13,6 +13,8 @@ spring:
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}
+  jackson:
+    visibility.creator: none
   security.oauth2.resourceserver.jwt:
     # Blank issuer: no JwtDecoder is created and only API keys authenticate.
     issuer-uri: ${approvals.security.oauth.issuer-uri}

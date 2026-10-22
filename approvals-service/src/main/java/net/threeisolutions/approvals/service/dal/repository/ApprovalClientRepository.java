@@ -5,11 +5,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface ApprovalClientRepository extends JpaRepository<ApprovalClient, UUID> {
     Optional<ApprovalClient> findByCode(String code);
+
+    boolean existsByCode(String code);
+
+    List<ApprovalClient> findByTenantIdOrderByCode(String tenantId);
 
     @Query(value = "select * from approval_client "
             + "where auth_mode = 'OAUTH_CC' "
